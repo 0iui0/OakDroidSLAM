@@ -1,0 +1,117 @@
+#pragma once
+
+#include <unordered_map>
+#include <vector>
+
+#include "depthai-shared/datatype/RawStereoDepthConfig.hpp"
+#include "depthai/pipeline/datatype/Buffer.hpp"
+
+namespace dai {
+
+/**
+ * StereoDepthConfig message.
+ */
+class StereoDepthConfig : public Buffer {
+    std::shared_ptr<RawBuffer> serialize() const override;
+    RawStereoDepthConfig& cfg;
+
+   public:
+    using MedianFilter = dai::MedianFilter;
+    using AlgorithmControl = RawStereoDepthConfig::AlgorithmControl;
+    using PostProcessing = RawStereoDepthConfig::PostProcessing;
+    using CensusTransform = RawStereoDepthConfig::CensusTransform;
+    using CostMatching = RawStereoDepthConfig::CostMatching;
+    using CostAggregation = RawStereoDepthConfig::CostAggregation;
+
+    /**
+     * Construct StereoDepthConfig message.
+     */
+    StereoDepthConfig();
+    explicit StereoDepthConfig(std::shared_ptr<RawStereoDepthConfig> ptr);
+    virtual ~StereoDepthConfig() = default;
+
+    /**
+     * @param align Set the disparity/depth alignment: centered (between the 'left' and 'right' inputs),
+     * or from the perspective of a rectified output stream
+     */
+    StereoDepthConfig& setDepthAlign(AlgorithmControl::DepthAlign align);
+
+    /**
+     * Confidence threshold for disparity calculation
+     * @param confThr Confidence threshold value 0..255
+     */
+    StereoDepthConfig& setConfidenceThreshold(int confThr);
+    /**
+     * Get confidence threshold for disparity calculation
+     */
+    int getConfidenceThreshold() const;
+
+    /**
+     * @param median Set kernel size for disparity/depth median filtering, or disable
+     */
+    StereoDepthConfig& setMedianFilter(MedianFilter median);
+    /**
+     * Get median filter setting
+     */
+    MedianFilter getMedianFilter() const;
+
+    /**
+     * A larger value of the parameter means that farther colors within the pixel neighborhood will be mixed together,
+     * resulting in larger areas of semi-equal color.
+     * @param sigma Set sigma value for 5x5 bilateral filter. 0..65535
+     */
+    StereoDepthConfig& setBilateralFilterSigma(uint16_t sigma);
+    /**
+     * Get sigma value for 5x5 bilateral filter
+     */
+    uint16_t getBilateralFilterSigma() const;
+
+    /**
+     * @param threshold Set threshold for left-right, right-left disparity map combine, 0..255
+     */
+    StereoDepthConfig& setLeftRightCheckThreshold(int threshold);
+    /**
+     * Get threshold for left-right check combine
+     */
+    int getLeftRightCheckThreshold() const;
+
+    /**
+     * Computes and combines disparities in both L-R and R-L directions, and combine them.
+     *
+     * For better occlusion handling, discarding invalid disparity values
+     */
+    StereoDepthConfig& setLeftRightCheck(bool enable);
+
+    /**
+     * Disparity range increased from 95 to 190, combined from full resolution and downscaled images.
+     * Suitable for short range objects
+     */
+    StereoDepthConfig& setExtendedDisparity(bool enable);
+
+    /**
+     * Computes disparity with sub-pixel interpolation (3 fractional bits by default).
+     *
+     * Suitable for long range. Currently incompatible with extended disparity
+     */
+    StereoDepthConfig& setSubpixel(bool enable);
+
+    /**
+     * Useful for normalization of the disparity map.
+     * @returns Maximum disparity value that the node can return
+     */
+    float getMaxDisparity() const;
+
+    /**
+     * Set explicit configuration.
+     * @param config Explicit configuration
+     */
+    StereoDepthConfig& set(dai::RawStereoDepthConfig config);
+
+    /**
+     * Retrieve configuration data for StereoDepth.
+     * @returns config for stereo depth algorithm
+     */
+    dai::RawStereoDepthConfig get() const;
+};
+
+}  // namespace dai
