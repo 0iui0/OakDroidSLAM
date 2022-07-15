@@ -1,4 +1,4 @@
-package cn.iouoi.oakdroidros;
+package cn.iouoi.OakDroidSLAM;
 
 import org.junit.Test;
 

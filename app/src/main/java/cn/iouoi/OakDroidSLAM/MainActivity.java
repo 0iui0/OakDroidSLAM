@@ -1,4 +1,4 @@
-package cn.iouoi.oakdroidros;
+package cn.iouoi.OakDroidSLAM;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -10,13 +10,13 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import cn.iouoi.oakdroidros.databinding.ActivityMainBinding;
+import cn.iouoi.OakDroidSLAM.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'depthai_android_jni_example' library on application startup.
     static {
-        System.loadLibrary("oakdroidros");
+        System.loadLibrary("OakDroidSLAM");
     }
 
     private static final String yolov3_model_path = "yolo-v3-tiny-tf.blob";
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        cn.iouoi.oakdroidros.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
+        cn.iouoi.OakDroidSLAM.databinding.ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags( WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);

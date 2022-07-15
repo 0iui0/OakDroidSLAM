@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.18.1)
 
 # Declares and names the project.
 
-project("oakdroidros")
+project("OakDroidSLAM")
 
 # configure import libs
 set(distribution_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../../../distribution)
@@ -44,7 +44,7 @@ set_target_properties(depthai-lib PROPERTIES IMPORTED_LOCATION
 # Gradle automatically packages shared libraries with your APK.
 
 add_library( # Sets the name of the library.
-        oakdroidros
+        OakDroidSLAM
 
         # Sets the library as a shared library.
         SHARED
@@ -53,7 +53,7 @@ add_library( # Sets the name of the library.
         native-lib.cpp
         utils.cpp)
 
-target_include_directories(oakdroidros PRIVATE
+target_include_directories(OakDroidSLAM PRIVATE
         ${distribution_DIR}/gmath/include
         ${distribution_DIR}/gperf/include
         ${distribution_DIR}/libusb/include
@@ -79,7 +79,7 @@ find_library( # Sets the name of the path variable.
 # build script, prebuilt third-party libraries, or system libraries.
 
 target_link_libraries( # Specifies the target library.
-        oakdroidros
+        OakDroidSLAM
         android
         lib_gmath
         lib_gperf

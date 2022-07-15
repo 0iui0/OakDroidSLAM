@@ -39,7 +39,7 @@ static std::atomic<bool> lr_check{false};
   ((void)__android_log_print(ANDROID_LOG_INFO, "native-libs::", __VA_ARGS__))
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_cn_iouoi_oakdroidros_MainActivity_stringFromJNI(JNIEnv* env, jobject /* this */) {
+Java_cn_iouoi_OakDroidSLAM_MainActivity_stringFromJNI(JNIEnv* env, jobject /* this */) {
     auto ticks = GetTicks();
 
     for (auto exp = 0; exp < 32; ++exp) {
@@ -57,7 +57,7 @@ Java_cn_iouoi_oakdroidros_MainActivity_stringFromJNI(JNIEnv* env, jobject /* thi
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_cn_iouoi_oakdroidros_MainActivity_startDevice(JNIEnv *env, jobject thiz, jstring model_path, int rgbWidth, int rgbHeight) {
+Java_cn_iouoi_OakDroidSLAM_MainActivity_startDevice(JNIEnv *env, jobject thiz, jstring model_path, int rgbWidth, int rgbHeight) {
 
     // libusb
     auto r = libusb_set_option(nullptr, LIBUSB_OPTION_ANDROID_JNIENV, env);
@@ -163,7 +163,7 @@ Java_cn_iouoi_oakdroidros_MainActivity_startDevice(JNIEnv *env, jobject thiz, js
 }
 
 extern "C" JNIEXPORT jintArray JNICALL
-Java_cn_iouoi_oakdroidros_MainActivity_imageFromJNI(JNIEnv* env, jobject /* this */) {
+Java_cn_iouoi_OakDroidSLAM_MainActivity_imageFromJNI(JNIEnv* env, jobject /* this */) {
 
     std::shared_ptr<dai::ImgFrame> inRgb;
     if(syncNN) {
@@ -182,7 +182,7 @@ Java_cn_iouoi_oakdroidros_MainActivity_imageFromJNI(JNIEnv* env, jobject /* this
 }
 
 extern "C" JNIEXPORT jintArray JNICALL
-Java_cn_iouoi_oakdroidros_MainActivity_depthFromJNI(JNIEnv* env, jobject /* this */) {
+Java_cn_iouoi_OakDroidSLAM_MainActivity_depthFromJNI(JNIEnv* env, jobject /* this */) {
 
     bool oakD = device->getConnectedCameras().size() == 3;
     if(!oakD){
@@ -209,7 +209,7 @@ Java_cn_iouoi_oakdroidros_MainActivity_depthFromJNI(JNIEnv* env, jobject /* this
 
 extern "C"
 JNIEXPORT jintArray JNICALL
-Java_cn_iouoi_oakdroidros_MainActivity_detectionImageFromJNI(JNIEnv *env, jobject thiz) {
+Java_cn_iouoi_OakDroidSLAM_MainActivity_detectionImageFromJNI(JNIEnv *env, jobject thiz) {
     std::shared_ptr<dai::ImgDetections> inDet;
     if(syncNN) {
         inDet = qDet->get<dai::ImgDetections>();

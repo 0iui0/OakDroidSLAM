@@ -1,4 +1,4 @@
-package cn.iouoi.oakdroidros;
+package cn.iouoi.OakDroidSLAM;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("cn.iouoi.oakdroidros", appContext.getPackageName());
+        assertEquals("cn.iouoi.OakDroidSLAM", appContext.getPackageName());
     }
 }
