@@ -37,6 +37,16 @@ add_library( depthai-lib SHARED IMPORTED )
 set_target_properties(depthai-lib PROPERTIES IMPORTED_LOCATION
         ${distribution_DIR}/depthai/lib/${ANDROID_ABI}/libdepthai-core.so)
 
+######         boost         ######
+add_library( boost-lib STATIC IMPORTED )
+set_target_properties(boost-lib PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/boost/lib/${ANDROID_ABI}/libboost_system-clang-mt-a64-1_74.a)
+
+######         gtsam         ######
+add_library( gtsam-lib SHARED IMPORTED )
+set_target_properties(gtsam-lib PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/gtsam/lib/${ANDROID_ABI}/libgtsam.so.4.2.0)
+
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -58,7 +68,10 @@ target_include_directories(OakDroidSLAM PRIVATE
         ${distribution_DIR}/gperf/include
         ${distribution_DIR}/libusb/include
         ${distribution_DIR}/opencv/include
-        ${distribution_DIR}/depthai/include)
+        ${distribution_DIR}/depthai/include
+        ${distribution_DIR}/eigen3/include
+        ${distribution_DIR}/boost/include
+        ${distribution_DIR}/gtsam/include)
 
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -86,6 +99,8 @@ target_link_libraries( # Specifies the target library.
         depthai-lib
         opencv-lib
         usb-1.0
+        boost-lib
+        gtsam-lib
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
