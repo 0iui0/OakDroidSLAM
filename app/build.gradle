@@ -4,20 +4,21 @@ plugins {
 
 android {
     compileSdkVersion 29
-    ndkVersion '22.1.7171670'
+    ndkVersion '25.0.8775105'
 
     defaultConfig {
         applicationId "cn.iouoi.OakDroidSLAM"
         minSdk 21
-        targetSdk 28
+        targetSdk 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-                cppFlags '-std=c++14'
+                cppFlags '-std=c++11'
                 arguments "-DANDROID_STL=c++_shared"
+                abiFilters 'arm64-v8a'
             }
         }
     }
@@ -44,9 +45,9 @@ android {
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
