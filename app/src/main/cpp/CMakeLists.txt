@@ -47,6 +47,16 @@ add_library( gtsam-lib SHARED IMPORTED )
 set_target_properties(gtsam-lib PROPERTIES IMPORTED_LOCATION
         ${distribution_DIR}/gtsam/lib/${ANDROID_ABI}/libgtsam.so.4.2.0)
 
+######         yaml         ######
+add_library( yaml-lib STATIC IMPORTED )
+set_target_properties(yaml-lib PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/yaml/lib/${ANDROID_ABI}/libyaml-cpp.a)
+
+######         dso         ######
+add_library( dso-lib STATIC IMPORTED )
+set_target_properties(dso-lib PROPERTIES IMPORTED_LOCATION
+        ${distribution_DIR}/dso/lib/${ANDROID_ABI}/libdmvio.a)
+
 
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
@@ -69,9 +79,15 @@ target_include_directories(OakDroidSLAM PRIVATE
         ${distribution_DIR}/libusb/include
         ${distribution_DIR}/opencv/include
         ${distribution_DIR}/depthai/include
+        ${distribution_DIR}/suitesparse/include
+        ${distribution_DIR}/sse2neon/include
+        ${distribution_DIR}/sophus/include
         ${distribution_DIR}/eigen3/include
         ${distribution_DIR}/boost/include
-        ${distribution_DIR}/gtsam/include)
+        ${distribution_DIR}/yaml/include
+        ${distribution_DIR}/gtsam/include
+        ${distribution_DIR}/dso/include/dso
+        ${distribution_DIR}/dso/include)
 
 
 # Searches for a specified prebuilt library and stores the path as a
@@ -101,6 +117,8 @@ target_link_libraries( # Specifies the target library.
         usb-1.0
         boost-lib
         gtsam-lib
+        yaml-lib
+        dso-lib
         # Links the target library to the log library
         # included in the NDK.
         ${log-lib})
