@@ -12,6 +12,50 @@
 #include "depthai/depthai.hpp"
 
 #include "utils.h"
+#include <thread>
+#include <locale.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+
+// under dso
+#include "util/settings.h"
+#include "util/globalFuncs.h"
+#include "util/globalCalib.h"
+#include "IOWrapper/OutputWrapper/SampleOutputWrapper.h"
+#include "FullSystem/FullSystem.h"
+#include "FullSystem/PixelSelector2.h"
+#include "OptimizationBackend/MatrixAccumulators.h"
+#include "IOWrapper/Output3DWrapper.h"
+#include "IOWrapper/ImageDisplay.h"
+#include "util/Undistort.h"
+#include "util/NumType.h"
+// under dmvio
+#include "util/TimeMeasurement.h"
+#include <util/SettingsUtil.h>
+#include "live/OakdS2.h"
+#include "util/MainSettings.h"
+#include "live/FrameSkippingStrategy.h"
+#include <boost/filesystem.hpp>
+#include <boost/thread.hpp>
+
+// If mainSettings.calib is set we use this instead of the factory calibration.
+std::string calibSavePath = "./factoryCalibrationT265Camera.txt"; // Factory calibration will be saved here.
+std::string camchainSavePath = ""; // Factory camchain will be saved here if set.
+
+int start = 2;
+
+
+using namespace dso;
+
+dmvio::FrameContainer frameContainer;
+dmvio::MainSettings mainSettings;
+dmvio::IMUCalibration imuCalibration;
+dmvio::IMUSettings imuSettings;
+dmvio::FrameSkippingSettings frameSkippingSettings;
+std::unique_ptr<dmvio::DatasetSaver> datasetSaver;
+std::string saveDatasetPath = "";
 
 using namespace std;
 
@@ -226,4 +270,12 @@ Java_cn_iouoi_OakDroidSLAM_MainActivity_detectionImageFromJNI(JNIEnv *env, jobje
 
     // Copy image data to Bitmap int array
     return cvMatToBmpArray(env, detection_img);
+}
+
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_cn_iouoi_OakDroidSLAM_MainActivity_startDSO(JNIEnv *env, jobject thiz, jstring model_path, int rgbWidth, int rgbHeight) {
+
 }

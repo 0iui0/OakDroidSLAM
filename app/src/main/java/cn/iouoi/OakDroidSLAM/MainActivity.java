@@ -130,4 +130,5 @@ public class MainActivity extends AppCompatActivity {
     public native int[] imageFromJNI();
     public native int[] detectionImageFromJNI();
     public native int[] depthFromJNI();
+    public native void startDSO();
 }
